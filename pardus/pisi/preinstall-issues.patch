@@ -1,5 +1,5 @@
---- a/pisi/archive.py~	2011-07-15 15:19:49.000000000 +0200
-+++ b/pisi/archive.py	2013-01-11 18:05:29.779335204 +0100
+--- pisi/archive.py~	2011-07-15 15:19:49.000000000 +0200
++++ pisi/archive.py	2013-01-11 18:05:29.779335204 +0100
 @@ -301,6 +301,7 @@
              if callback:
                  callback(tarinfo, extracted=False)

@@ -15,7 +15,7 @@ Patch2:         better_cleaning_perl_packages.patch
 Patch3:         improve_emul32.diff
 Patch4:         add_python3_support.diff
 Patch5:         WorkDir.patch
-#Patch6:         preinstall-issues.patch
+Patch6:         preinstall-issues.patch
 Patch7:         verbose-index.patch
 Patch8:         assign-devel-and-doc-packages.patch
 Patch9:         bugzilla-address.diff
@@ -67,7 +67,7 @@ package management features.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p0
-#%patch6 -p1
+%patch6 -p0
 %patch7 -p0
 %patch8 -p0
 %patch9 -p1
@@ -116,7 +116,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(-,root,root,-)
-%doc ApiPlan AUTHORS ChangeLog* CODING COPYING README RefactorPlan TODO
+%doc AUTHORS ChangeLog* CODING COPYING README TODO
 /usr/share/doc/pisi
 
 #%dir %{_libdir}/pardus
