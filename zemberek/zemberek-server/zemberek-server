@@ -1,0 +1,3 @@
+#!/bin/sh
+java \
+	-DConfigFile=/etc/zemberek-server.ini -Djava.library.path=/usr/lib64 -Xverify:none -Xms12m -Xmx14m -cp /usr/lib64/zemberek/zemberek2-cekirdek.jar:/usr/lib64/zemberek/zemberek2-tr.jar:/usr/lib64/zemberek-server/zemberek-server.jar:/usr/lib64/zemberek-server/mina-core.jar:/usr/lib64/zemberek-server/slf4j-nop.jar:/usr/share/java/dbus-java/dbus.jar:/usr/lib64/libmatthew-java/unix.jar:/usr/lib64/libmatthew-java/hexdump.jar:/usr/lib64/libmatthew-java/debug-disable.jar net.zemberekserver.server.ZemberekServer

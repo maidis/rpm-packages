@@ -1,0 +1,2 @@
+#!/bin/sh
+java -cp /usr/lib64/zemberek/zemberek2-cekirdek.jar:/usr/lib64/zemberek/zemberek2-demo.jar:/usr/lib64/zemberek/zemberek2-tr.jar net.zemberek.demo.DemoMain

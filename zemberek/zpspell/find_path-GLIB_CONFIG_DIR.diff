@@ -1,0 +1,19 @@
+Subject: zpspell: FTBFS: CMake Error: The following variables are used
+ in this project, but they are set to NOTFOUND.
+
+* CMakeLists.txt: add path to find_path GLIB_CONFIG_DIR
+
+Bug-Debian: http://bugs.debian.org/652208
+Author: HIGUCHI Daisuke (VDR dai) <dai@debian.org>
+
+--- zpspell-0.4.3/CMakeLists.txt.orig	2012-01-07 21:49:19.000000000 +0900
++++ zpspell-0.4.3/CMakeLists.txt	2012-01-07 22:00:41.000000000 +0900
+@@ -74,6 +74,8 @@ find_library(GLIB2_LIBRARY NAMES glib-2.
+ )
+ # GLIB_CONFIG
+ find_path(GLIB_CONFIG_DIR glibconfig.h
++   ${_glibLinkDir}/glib-2.0/include
++   ${_glibLinkDir}/glib-2.0
+    /usr/lib/glib-2.0/include
+    /usr/lib/glib-2.0
+    /usr/include/glib-2.0

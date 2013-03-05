@@ -1,0 +1,87 @@
+#!/bin/sh
+#
+# zemberek-server:   Zemberek Server
+#
+# chkconfig: 345 25 60
+# description:  Turkish spell checker server
+#
+# processname: zemberek-server
+# pidfile: /var/run/zemberek-server.pid
+#
+### BEGIN INIT INFO
+# Provides: zemberek-server
+# Required-Start: messagebus
+# Required-Stop: messagebus
+# Default-Start: 3 4 5
+# Short-Description: Zemberek Server
+# Description: Turkish spell checker server
+### END INIT INFO
+
+# Sanity checks.
+[ -x /usr/bin/zemberek-server ] || exit 0
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# so we can rearrange this easily
+processname=zemberek-server
+servicename=zemberek-server
+
+RETVAL=0
+
+start() {
+    gprintf "zemberek-server servisi çalıştırılıyor: "
+    #daemon --check $servicename $processname
+    daemon /usr/bin/zemberek-server
+    RETVAL=$?
+    if [ $RETVAL -eq 0 ]; then  
+	PID=`ps aux | grep zemberek|grep java|awk '{print $2}'`
+	if [ $PID ]; then
+	    touch /var/lock/subsys/zemberek-server
+    	    echo $PID > /var/run/zemberek-server.pid
+	fi
+    fi
+    return $RETVAL
+}
+
+stop() {
+    gprintf "zemberek-server servisi durduruluyor: "
+
+    killproc $servicename -TERM
+    RETVAL=$?
+    echo
+    if [ $RETVAL -eq 0 ]; then
+        rm -f /var/lock/subsys/$servicename
+        rm -f /var/run/zemberek-server.pid
+    fi
+}
+
+# See how we were called.
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        status $processname
+        RETVAL=$?
+        ;;
+    restart)
+        stop
+	sleep 3
+        start
+        ;;
+    condrestart)
+        if [ -f /var/lock/subsys/$servicename ]; then
+            stop
+	    sleep 3
+            start
+        fi
+        ;;
+    *)
+        gprintf "Usage: %s {start|stop|status|restart|condrestart}\n" "$0"
+        ;;
+esac
+exit $RETVAL
