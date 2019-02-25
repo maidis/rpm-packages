@@ -10,7 +10,7 @@ Source0:        SFGUI-0.4.0.tar.gz
 
 BuildRequires:  SFML-devel
 BuildRequires:  cmake
-
+Requires:       ell-devel
 Requires:       SFML
 
 %description
@@ -40,6 +40,7 @@ look similar to CSS.
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       cmake
+Requires:       ell-devel
  
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -50,6 +51,9 @@ developing applications that use %{name}.
 
 # fixup non needed executable permission on regular files
 find -type f -print0 | xargs -0 chmod -x
+# use system-wide extlibs; so, delete everything modulo libELL header files
+find extlibs/ -type f ! -name 'libELL*' -print0 | xargs -0 rm
+ 
 
 %build
 %{cmake} -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release .
@@ -59,11 +63,15 @@ make %{?_smp_mflags}
 %make_install
 mkdir $RPM_BUILD_ROOT%{_libdir}/cmake
 mkdir $RPM_BUILD_ROOT%{_libdir}/cmake/%{name}
-mv $RPM_BUILD_ROOT%{_datadir}/%{name}/cmake/* $RPM_BUILD_ROOT%{_libdir}/cmake/%{name}/
+cp $RPM_BUILD_ROOT%{_datadir}/%{name}/cmake/* $RPM_BUILD_ROOT%{_libdir}/cmake/%{name}/
+ln -s %{_libdir}/libSFGUI.so $RPM_BUILD_ROOT%{_libdir}/libSFGUI.so.0.4.0
+ln -s %{_libdir}/libSFGUI.so $RPM_BUILD_ROOT%{_libdir}/libSFGUI.so.0.4
+ln -s %{_libdir}/libSFGUI.so $RPM_BUILD_ROOT%{_libdir}/libSFGUI.so.0
+ln -s %{_libdir}/libSFGUI.so $RPM_BUILD_ROOT%{_libdir}/libsfgui.so
 
 %files
 %doc *.md
-#%{_libdir}/*.so*
+%{_libdir}/*.so*
 
 %files devel
 %{_libdir}/cmake/%{name}/*.cmake
